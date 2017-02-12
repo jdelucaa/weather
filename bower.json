@@ -1,0 +1,35 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "Website for weather forecast",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "weather",
+    "forecast"
+  ],
+  "authors": [
+    "Joana Deluca Kleis"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "font-awesome": "~4.4.0",
+    "angular": "~1.4.7",
+    "angular-route": "^1.4.14",
+    "angular-ui-router": "^0.4.2",
+    "angular-resource": "1.4.7",
+    "angular-mocks": "^1.6.2"
+  },
+  "resolutions": {
+    "angular": "1.4.7"
+  }
+}

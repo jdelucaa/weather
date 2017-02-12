@@ -1,0 +1,15 @@
+# npm
+node_modules
+
+# bower
+bower_components
+
+# dist
+dist
+
+# IntelliJ project settings
+.idea
+*.iml
+
+# scss
+.sass-cache

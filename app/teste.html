@@ -1,0 +1,285 @@
+<div class="container" ng-controller="ForecastController as forecastCtrl">
+
+    <div class="container">
+        <div class="row row-header">
+            <div class="col-md-12">
+                <form id="form" ng-class="{ 'has-error' : forecastCtrl.invalidLocation }">
+                    <label for="buscar" class="fontFamily blue">Inform a location:</label>
+                    <div class="inner-addon right-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                        <input type="text" placeholder="Ex: Blumenau, SC" class="form-control"
+                               ng-keyup="$event.keyCode == 13 && forecastCtrl.updateLocation()" id="buscar"
+                               ng-model="forecastCtrl.newLocation">
+                        <span ng-show="forecastCtrl.invalidLocation" class="help-block">Acceptable Example: São Paulo - SP, Brazil</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 id="location" class="fontFamily blue">{{forecastCtrl.location}} <a class="btn btn-primary" ng-click="forecastCtrl.saveFavorite()">
+                    <i class="fa fa-thumb-tack white"></i>
+                    Set Favorite</a></h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row row-content">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title fontFamily"><strong>Today</strong></h3>
+                    </div>
+                    <div class="panel-body" ng-if="forecastCtrl.showObservation">
+                        <div class="col-xs-6 col-sm-4 col-lg-4">
+                            <img ng-src={{forecastCtrl.image}} width="167" height="123" class="img-responsive">
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-lg-4">
+                            <h1 class="fontFamily blue big">{{forecastCtrl.observation.response.ob.tempC}}ºC</h1>
+                            <h5 class="fontFamily blue">{{forecastCtrl.observation.response.ob.weather}}</h5>
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <h5 class="fontFamily blue"><strong>Humidity:</strong>
+                                {{forecastCtrl.observation.response.ob.humidity}}%</h5>
+                            <h5 class="fontFamily blue"><strong>Pressure:</strong>
+                                {{forecastCtrl.observation.response.ob.pressureMB}}</h5>
+                            <h5 class="fontFamily blue"><strong>Wind:</strong>
+                                {{forecastCtrl.observation.response.ob.windKPH}} km/h</h5>
+                        </div>
+                    </div>
+                    <div class="overlay col-xs-offset-6 col-sm-offset-5" ng-if="!forecastCtrl.showObservation">
+                        <span class="fa fa-refresh fa-spin"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title fontFamily blue"><strong>Week's Temperatures</strong></h3>
+                    </div>
+                    <div class="panel-body" ng-if="forecastCtrl.showForecast">
+                        <div class="col-sm-offset-2 col-xs-12 col-sm-3">
+                            <span class="fontFamily blue medium"><strong>Mínima: </strong>{{forecastCtrl.min}}°C</span>
+                        </div>
+                        <div class="col-sm-offset-1 col-xs-12 col-sm-3">
+                            <span class="fontFamily blue medium"><strong>Máxima: </strong>{{forecastCtrl.max}}°C</span>
+                        </div>
+                    </div>
+                    <div class="overlay col-xs-offset-6 col-sm-offset-5" ng-if="!forecastCtrl.showForecast">
+                        <span class="fa fa-refresh fa-spin"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row row-content">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title fontFamily blue"><strong>Graphics</strong></h3>
+                    </div>
+                    <div class="panel-body" ng-if="forecastCtrl.showForecast">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6">
+
+                            </div>
+                            <div class="col-xs-6 col-sm-6">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overlay col-xs-offset-6 col-sm-offset-5" ng-if="!forecastCtrl.showForecast">
+                        <span class="fa fa-refresh fa-spin"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title fontFamily blue"><strong>Recomendations for the Weekend</strong></h3>
+                    </div>
+                    <div class="panel-body" ng-if="forecastCtrl.showWeekendForecast">
+                        <div class="col-xs-12 col-sm-2">
+                            <span class="fontFamily blue"><strong>Min-Máx Sáb.: </strong></span>
+                            <span class="fontFamily blue">{{forecastCtrl.weekendForecast.response[0].periods[0].minTempC}} - {{forecastCtrl.weekendForecast.response[0].periods[0].maxTempC}}</span>
+                        </div>
+
+                        <div class="col-sm-offset-1 col-xs-12 col-sm-2">
+                            <span class="fontFamily blue"><strong>Min-Max Dom.: </strong></span>
+                            <span class="fontFamily blue">{{forecastCtrl.weekendForecast.response[0].periods[1].minTempC}} - {{forecastCtrl.weekendForecast.response[0].periods[1].maxTempC}}</span>
+                        </div>
+
+                        <div class="col-sm-offset-1 col-xs-12 col-sm-4" ng-if="forecastCtrl.beach">
+                            <img ng-src="images/beach.jpg" width="167" height="123" class="img-responsive">
+                            <span class="fontFamily blue">Enjoy the beach this weekend! It is going to be sunny.</span>
+                        </div>
+
+                        <div class="col-sm-offset-1 col-xs-12 col-sm-4" ng-if="forecastCtrl.hotchocolate">
+                            <img ng-src="images/chocolate.jpg" width="167" height="123" class="img-responsive">
+                            <span class="fontFamily blue">Cold weather for the weekdend! Brr..</span>
+                        </div>
+
+                        <div class="col-sm-offset-1 col-xs-12 col-sm-4" ng-if="forecastCtrl.movie">
+                            <img ng-src="images/movie.jpg" width="167" height="123" class="img-responsive">
+                            <span class="fontFamily blue">Rain for the weekend! Go watch a movie.</span>
+                        </div>
+                    </div>
+                    <div class="overlay col-xs-offset-6 col-sm-offset-5" ng-if="!forecastCtrl.showWeekendForecast">
+                        <span class="fa fa-refresh fa-spin"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row row-content">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title fontFamily blue"><strong>{{forecastCtrl.forecast.response[0].periods[2].validTime | date: 'EEEE'}}</strong></h3>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="panel-body" ng-if="forecastCtrl.showForecast">
+                            <span class="fa fa-arrow-down blue"></span>
+                            <span class="fontFamily blue">{{forecastCtrl.forecast.response[0].periods[2].minTempC}}</span>
+                            <span class="fa fa-arrow-up blue"></span>
+                            <span class="fontFamily blue">{{forecastCtrl.forecast.response[0].periods[2].maxTempC}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="panel-body" ng-if="forecastCtrl.showForecast">
+                            <h5 class="fontFamily blue"><strong>Humidity:</strong>
+                                {{forecastCtrl.forecast.response[0].periods[2].humidity}}%</h5>
+                            <h5 class="fontFamily blue"><strong>Wind:</strong>
+                                {{forecastCtrl.forecast.response[0].periods[2].windGustKPH}} km/h</h5>
+                        </div>
+                    </div>
+                    <div class="overlay" ng-if="!forecastCtrl.showForecast">
+                        <span class="fa fa-refresh fa-spin"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title fontFamily blue"><strong>{{forecastCtrl.forecast.response[0].periods[3].validTime | date: 'EEEE'}}</strong></h3>
+                </div>
+                <div class="col-md-1">
+                    <div class="panel-body" ng-if="forecastCtrl.showForecast">
+                        <span class="fa fa-arrow-down blue"></span>
+                        <span class="fontFamily blue">{{forecastCtrl.forecast.response[0].periods[3].minTempC}}</span>
+                        <span class="fa fa-arrow-up blue"></span>
+                        <span class="fontFamily blue">{{forecastCtrl.forecast.response[0].periods[3].maxTempC}}</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="panel-body" ng-if="forecastCtrl.showForecast">
+                        <h5 class="fontFamily blue"><strong>Humidity:</strong>
+                            {{forecastCtrl.forecast.response[0].periods[3].humidity}}%</h5>
+                        <h5 class="fontFamily blue"><strong>Wind:</strong>
+                            {{forecastCtrl.forecast.response[0].periods[3].windGustKPH}} km/h</h5>
+                    </div>
+                </div>
+                <div class="overlay" ng-if="!forecastCtrl.showForecast">
+                    <span class="fa fa-refresh fa-spin"></span>
+                </div>
+            </div>
+            </div>
+
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title fontFamily blue"><strong>{{forecastCtrl.forecast.response[0].periods[3].validTime | date: 'EEEE'}}</strong></h3>
+                </div>
+                <div class="col-md-1">
+                    <div class="panel-body" ng-if="forecastCtrl.showForecast">
+                        <span class="fa fa-arrow-down blue"></span>
+                        <span class="fontFamily blue">{{forecastCtrl.forecast.response[0].periods[3].minTempC}}</span>
+                        <span class="fa fa-arrow-up blue"></span>
+                        <span class="fontFamily blue">{{forecastCtrl.forecast.response[0].periods[3].maxTempC}}</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="panel-body" ng-if="forecastCtrl.showForecast">
+                        <h5 class="fontFamily blue"><strong>Humidity:</strong>
+                            {{forecastCtrl.forecast.response[0].periods[3].humidity}}%</h5>
+                        <h5 class="fontFamily blue"><strong>Wind:</strong>
+                            {{forecastCtrl.forecast.response[0].periods[3].windGustKPH}} km/h</h5>
+                    </div>
+                </div>
+                <div class="overlay" ng-if="!forecastCtrl.showForecast">
+                    <span class="fa fa-refresh fa-spin"></span>
+                </div>
+            </div>
+            </div>
+
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title fontFamily blue"><strong>{{forecastCtrl.forecast.response[0].periods[4].validTime | date: 'EEEE'}}</strong></h3>
+                </div>
+                <div class="col-md-1">
+                    <div class="panel-body" ng-if="forecastCtrl.showForecast">
+                        <span class="fa fa-arrow-down blue"></span>
+                        <span class="fontFamily blue">{{forecastCtrl.forecast.response[0].periods[4].minTempC}}</span>
+                        <span class="fa fa-arrow-up blue"></span>
+                        <span class="fontFamily blue">{{forecastCtrl.forecast.response[0].periods[4].maxTempC}}</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="panel-body" ng-if="forecastCtrl.showForecast">
+                        <h5 class="fontFamily blue"><strong>Humidity:</strong>
+                            {{forecastCtrl.forecast.response[0].periods[4].humidity}}%</h5>
+                        <h5 class="fontFamily blue"><strong>Wind:</strong>
+                            {{forecastCtrl.forecast.response[0].periods[4].windGustKPH}} km/h</h5>
+                    </div>
+                </div>
+                <div class="overlay" ng-if="!forecastCtrl.showForecast">
+                    <span class="fa fa-refresh fa-spin"></span>
+                </div>
+            </div>
+            </div>
+
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title fontFamily blue"><strong>{{forecastCtrl.forecast.response[0].periods[5].validTime | date: 'EEEE'}}</strong></h3>
+                </div>
+                <div class="col-md-1">
+                    <div class="panel-body" ng-if="forecastCtrl.showForecast">
+                        <span class="fa fa-arrow-down blue"></span>
+                        <span class="fontFamily blue">{{forecastCtrl.forecast.response[0].periods[5].minTempC}}</span>
+                        <span class="fa fa-arrow-up blue"></span>
+                        <span class="fontFamily blue">{{forecastCtrl.forecast.response[0].periods[5].maxTempC}}</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="panel-body" ng-if="forecastCtrl.showForecast">
+                        <h5 class="fontFamily blue"><strong>Humidity:</strong>
+                            {{forecastCtrl.forecast.response[0].periods[5].humidity}}%</h5>
+                        <h5 class="fontFamily blue"><strong>Wind:</strong>
+                            {{forecastCtrl.forecast.response[0].periods[5].windGustKPH}} km/h</h5>
+                    </div>
+                </div>
+                <div class="overlay" ng-if="!forecastCtrl.showForecast">
+                    <span class="fa fa-refresh fa-spin"></span>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

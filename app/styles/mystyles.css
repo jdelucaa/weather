@@ -1,0 +1,98 @@
+.row {
+    margin: 0 auto;
+    padding: 40px 0 0 0;
+}
+
+.row-nopad {
+    margin: 0 auto;
+    padding: 0 0 0 0;
+}
+
+.pad {
+    padding: 10px 0 0 0;
+}
+
+.row-header {
+    margin: 0 auto;
+    padding: 0 0;
+}
+
+.row-content {
+    margin: 0 auto;
+    padding: 10px 0 0 0;
+    min-height: 100px;
+}
+
+.row-footer {
+    margin: 0 auto;
+    padding: 20px 0;
+    background-color: #468bcb;
+}
+
+.jumbotron {
+    margin: 0 0 30px 0;
+    padding: 50px 10px;
+    background: #468bcb;
+    color: floralwhite;
+}
+
+.panel {
+    height: 300px;
+}
+
+.weekly {
+    height: auto;
+    display: inline-block;
+}
+
+.fa-refresh {
+    font-size: 170%;
+    color: #0d70b7;
+    margin: auto;
+}
+
+.inner-addon {
+    position: relative;
+}
+
+.inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+
+.right-addon .glyphicon {
+    right: 0;
+}
+
+.right-addon input {
+    padding-right: 30px;
+}
+
+.fontFamily {
+    font-family: "Roboto", Arial, sans-serif;
+}
+
+.blue {
+    color: #0d4d62;
+}
+
+.white {
+    color: floralwhite;
+}
+
+.red {
+    color: red;
+}
+
+.big {
+    font-size: 400%;
+}
+
+.medium {
+    font-size: 200%;
+}
+
+.pac-container {
+    font-family: "Roboto", Arial, sans-serif;
+}
