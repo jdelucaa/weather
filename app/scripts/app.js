@@ -12,6 +12,7 @@ angular.module('weatherApp', ['ui.router', 'ngResource'])
                     'content': {
                         templateUrl: 'views/home.html',
                         controller: 'ForecastController',
+                        controllerAs: 'vm'
                     },
                     'footer': {
                         templateUrl: 'views/footer.html'

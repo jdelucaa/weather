@@ -30,23 +30,6 @@
         setLocation();
         loadForecasts();
 
-        vm.saveFavorite = function saveFavorite() {
-            localStorage.setItem('location', DEFAULT_LOCATION);
-        };
-
-        vm.updateLocation = function updateLocation() {
-            var uglyLocation = vm.newLocation;
-
-            if (hasNumbers(uglyLocation)) {
-                vm.invalidLocation = true;
-            } else {
-                vm.invalidLocation = false;
-                vm.location = uglyLocation.replace("-", ",").trim();
-                loadForecasts();
-                vm.form.$setPristine();
-            }
-        };
-
         function setLocation() {
             if (localStorage.getItem('location') === null) {
                 vm.location = DEFAULT_LOCATION;
@@ -92,6 +75,22 @@
                     }
                 );
         }
+
+        vm.saveFavorite = function saveFavorite() {
+            localStorage.setItem('location', vm.newLocation.replace("-", ",").trim());
+        };
+
+        vm.updateLocation = function updateLocation() {
+            var uglyLocation = vm.newLocation;
+
+            if (hasNumbers(uglyLocation)) {
+                vm.invalidLocation = true;
+            } else {
+                vm.invalidLocation = false;
+                vm.location = uglyLocation.replace("-", ",").trim();
+                loadForecasts();
+            }
+        };
 
         function hasNumbers(text) {
             var regex = /\d/g;
