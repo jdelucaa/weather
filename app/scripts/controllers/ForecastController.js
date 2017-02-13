@@ -139,11 +139,11 @@
                 var day = periods[i];
                 if (day.maxTempC > max) {
                     max = day.maxTempC;
-                    maxDate = day.timestamp;
+                    maxDate = day.validTime;
                 }
                 if (day.minTempC < min) {
                     min = day.minTempC;
-                    minDate = day.timestamp;
+                    minDate = day.validTime;
                 }
             }
             vm.max = max;
