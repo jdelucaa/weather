@@ -18,9 +18,11 @@
         vm.showObservation = false;
         vm.showForecast = false;
         vm.showWeekendForecast = false;
-        vm.beach = true;
-        vm.movie = false;
-        vm.hotchocolate = false;
+
+        vm.warm = true;
+        vm.rain = false;
+        vm.cold = false;
+
         vm.location = "";
         vm.newLocation = "";
         vm.image = "";
@@ -77,7 +79,7 @@
         }
 
         vm.saveFavorite = function saveFavorite() {
-            localStorage.setItem('location', vm.newLocation.replace("-", ",").trim());
+            localStorage.setItem('location', vm.location.replace("-", ",").trim());
         };
 
         vm.updateLocation = function updateLocation() {
@@ -98,30 +100,29 @@
         }
 
         function prepareRecomendation() {
-            var periods = vm.weekendForecast.response[0].periods;
+            var day = vm.weekendForecast.response[0].periods[1];
 
-            for (var i = 0; i < periods.length; i++) {
-                var day = periods[i];
+                var dayWeather = day.weather.toLowerCase(); 
 
-                if (day.weather.includes('Cloudy') || day.weather.includes('Rain') || day.weather.includes('Shower') || day.weather.includes('Thunder') && day.maxTempC <= 22) {
-                    vm.beach = false;
-                    vm.movie = true;
-                }
-
-                if (day.weather.maxTempC <= 15) {
-                    vm.hotchocolate = true;
-                }
-            }
+                if (dayWeather.includes('rain') || dayWeather.includes('thunder') || dayWeather.includes('mostly cloudy')) {
+                    vm.rain = true;
+                    vm.warm = false;
+                } else if (dayWeather.includes('snow') || day.maxTempC <= 22) {
+                    vm.cold = true;
+                    vm.warm = false;
+                }     
         }
 
         function updateImage() {
-            if (vm.observation.response.ob.weatherCoded.includes("CL")) {
+            var weather = vm.observation.response.ob.weather.toLowerCase();
+
+            if (weather.includes("sunny")) {
                 vm.image = "images/sunny.png";
-            } else if (vm.observation.response.ob.weather.includes("Rain") || vm.observation.response.ob.weather.includes("Showers")) {
+            } else if (weather.includes("rain") || weather.includes("showers")) {
                 vm.image = "images/rain.png";
-            } else if (vm.observation.response.ob.weather.includes("Thunder")) {
+            } else if (weather.includes("thunder")) {
                 vm.image = "images/thunder.png";
-            } else if (vm.observation.response.ob.weatherCoded.includes("OV")) {
+            } else if (weather.includes("mostly cloudy")) {
                 vm.image = "images/cloudy.png";
             } else {
                 vm.image = "images/pcloudy.png";
