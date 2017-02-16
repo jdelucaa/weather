@@ -1,5 +1,5 @@
 'use strict';
-angular.module('weatherApp', ['ui.router', 'ngResource'])
+angular.module('weatherApp', ['ui.router', 'ngResource', 'googlechart'])
 
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider

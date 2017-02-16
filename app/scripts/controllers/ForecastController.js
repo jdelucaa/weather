@@ -9,15 +9,17 @@
         .constant("DEFAULT_LOCATION", "Blumenau,SC,Brazil")
         .controller('ForecastController', ForecastController);
 
-    ForecastController.$inject = ['observationService', 'forecastService', 'DEFAULT_LOCATION'];
+    ForecastController.$inject = ['observationService', 'forecastService', 'DEFAULT_LOCATION', '$filter'];
 
-    function ForecastController(observationService, forecastService, DEFAULT_LOCATION) {
+    function ForecastController(observationService, forecastService, DEFAULT_LOCATION, $filter) {
 
         var vm = this;
 
         vm.showObservation = false;
         vm.showForecast = false;
         vm.showWeekendForecast = false;
+        vm.myChartObject = {};
+        vm.lineChart = lineChart;
 
         vm.warm = true;
         vm.rain = false;
@@ -58,6 +60,7 @@
                     function (response) {
                         vm.forecast = response;
                         findMinMaxTemps();
+                        loadChart();
                         vm.showForecast = true;
                     },
                     function (response) {
@@ -151,6 +154,108 @@
             vm.maxDate = maxDate;
             vm.min = min;
             vm.minDate = minDate;
+        }
+
+        function lineChart(selectedItem) {
+            var col = selectedItem.column;
+            if (selectedItem.row === null) {
+                if (vm.myChartObject.view.columns[col] === col) {
+                    vm.myChartObject.view.columns[col] = {
+                        label: vm.myChartObject.data.cols[col].label,
+                        type: vm.myChartObject.data.cols[col].type,
+                        calc: function() {
+                            return null;
+                        }
+                    };
+                    vm.myChartObject.options.colors[col - 1] = '#CCCCCC';
+                }
+                else {
+                    vm.myChartObject.view.columns[col] = col;
+                    vm.myChartObject.options.colors[col - 1] = vm.myChartObject.options.defaultColors[col - 1];
+                }
+            }
+        }
+
+        function loadChart() {
+            vm.myChartObject.type = "LineChart";
+            vm.myChartObject.displayed = false;
+            vm.myChartObject.data = {
+                "cols": [{
+                    id: "day",
+                    label: "Day",
+                    type: "string"
+                }, {
+                    id: "maxtemp-id",
+                    label: "Max. Temp",
+                    type: "number"
+                }, {
+                    id: "mintemp-id",
+                    label: "Min. Temp",
+                    type: "number"
+                }],
+                "rows": [{
+                    c: [{
+                        v: $filter("date")(vm.forecast.response[0].periods[1].validTime, "EEEE")
+                    }, {
+                        v: vm.forecast.response[0].periods[1].maxTempC
+                    }, {
+                        v: vm.forecast.response[0].periods[1].minTempC
+                    }]
+                }, {
+                    c: [{
+                        v: $filter("date")(vm.forecast.response[0].periods[2].validTime, "EEEE")
+                    }, {
+                        v: vm.forecast.response[0].periods[2].maxTempC
+                    }, {
+                        v: vm.forecast.response[0].periods[2].minTempC
+                    }]
+
+                }, {
+                    c: [{
+                        v: $filter("date")(vm.forecast.response[0].periods[3].validTime, "EEEE")
+                    }, {
+                        v: vm.forecast.response[0].periods[3].maxTempC
+                    }, {
+                        v: vm.forecast.response[0].periods[3].minTempC
+                    }]
+                }, {
+                    c: [{
+                        v: $filter("date")(vm.forecast.response[0].periods[4].validTime, "EEEE")
+                    }, {
+                        v: vm.forecast.response[0].periods[4].maxTempC
+                    }, {
+                        v: vm.forecast.response[0].periods[4].minTempC
+                    }]
+                }, {
+                    c: [{
+                        v: $filter("date")(vm.forecast.response[0].periods[5].validTime, "EEEE")
+                    }, {
+                        v: vm.forecast.response[0].periods[5].maxTempC
+                    }, {
+                        v: vm.forecast.response[0].periods[5].minTempC
+                    }]
+                }]
+            };
+            vm.myChartObject.options = {
+                "colors": ['#CC0000', '#468bcb'],
+                "defaultColors": ['#CC0000', '#468bcb'],
+                "isStacked": "true",
+                "fill": 20,
+                "displayExactValues": true,
+                "vAxis": {
+                    "title": "Temperature",
+                    "gridlines": {
+                        "count": 10
+                    }
+                },
+                "hAxis": {
+                    "title": "Week Days"
+                }
+            };
+
+            vm.myChartObject.view = {
+                columns: [0, 1, 2]
+            };
         }
     }
 })();
