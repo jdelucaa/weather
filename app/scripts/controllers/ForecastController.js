@@ -123,7 +123,7 @@
         function updateImage() {
             var weather = vm.observation.response.ob.weather.toLowerCase();
 
-            if (weather.includes("sunny")) {
+            if (weather.includes("sunny") || weather.includes('clear')) {
                 vm.image = "images/sunny.png";
             } else if (weather.includes("rain") || weather.includes("showers")) {
                 vm.image = "images/rain.png";
