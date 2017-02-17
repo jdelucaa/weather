@@ -103,17 +103,21 @@
         }
 
         function prepareRecomendation() {
+            vm.warm = true;
+            vm.rain = false;
+            vm.cold = false;
+
             var day = vm.weekendForecast.response[0].periods[1];
 
-                var dayWeather = day.weather.toLowerCase(); 
+            var dayWeather = day.weather.toLowerCase();
 
-                if (dayWeather.includes('rain') || dayWeather.includes('thunder') || dayWeather.includes('mostly cloudy')) {
-                    vm.rain = true;
-                    vm.warm = false;
-                } else if (dayWeather.includes('snow') || day.maxTempC <= 22) {
-                    vm.cold = true;
-                    vm.warm = false;
-                }     
+            if (dayWeather.includes('rain') || dayWeather.includes('thunder') || dayWeather.includes('drizzle') || dayWeather.includes('mostly cloudy')) {
+                vm.rain = true;
+                vm.warm = false;
+            } else if (dayWeather.includes('snow') || day.maxTempC <= 22) {
+                vm.cold = true;
+                vm.warm = false;
+            }
         }
 
         function updateImage() {
@@ -163,7 +167,7 @@
                     vm.myChartObject.view.columns[col] = {
                         label: vm.myChartObject.data.cols[col].label,
                         type: vm.myChartObject.data.cols[col].type,
-                        calc: function() {
+                        calc: function () {
                             return null;
                         }
                     };
