@@ -9,9 +9,9 @@
         .constant("DEFAULT_LOCATION", "Blumenau,SC,Brazil")
         .controller('ForecastController', ForecastController);
 
-    ForecastController.$inject = ['observationService', 'forecastService', 'DEFAULT_LOCATION', '$filter'];
+    ForecastController.$inject = ['observationService', 'forecastService', 'DEFAULT_LOCATION', '$filter', '$scope', '$log'];
 
-    function ForecastController(observationService, forecastService, DEFAULT_LOCATION, $filter) {
+    function ForecastController(observationService, forecastService, DEFAULT_LOCATION, $filter, $scope, $log) {
 
         var vm = this;
 
@@ -21,15 +21,10 @@
         vm.myChartObject = {};
         vm.lineChart = lineChart;
 
-        vm.warm = true;
-        vm.rain = false;
-        vm.cold = false;
-
-        vm.location = "";
         vm.newLocation = "";
+        vm.location = "";
         vm.image = "";
         vm.invalidLocation = false;
-        vm.recMsg = "";
 
         setLocation();
         loadForecasts();
@@ -85,7 +80,16 @@
             localStorage.setItem('location', vm.location.replace("-", ",").trim());
         };
 
-        vm.updateLocation = function updateLocation() {
+        $scope.$watch('forecastCtrl.newLocation', function(current, original) {
+            $log.info('forecastCtrl.newLocation was %s', original);
+            $log.info('forecastCtrl.newLocation is now %s', current);
+
+            if (vm.newLocation !== undefined && vm.newLocation !== "") {
+                updateLocation();
+            }
+        });
+
+        function updateLocation() {
             var uglyLocation = vm.newLocation;
 
             if (hasNumbers(uglyLocation)) {
@@ -95,7 +99,7 @@
                 vm.location = uglyLocation.replace("-", ",").trim();
                 loadForecasts();
             }
-        };
+        }
 
         function hasNumbers(text) {
             var regex = /\d/g;

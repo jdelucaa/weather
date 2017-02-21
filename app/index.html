@@ -39,26 +39,8 @@
 <script src="scripts/controllers/ForecastController.js"></script>
 <script src="scripts/services/ForecastService.js"></script>
 <script src="scripts/services/ObservationService.js"></script>
-<script>
-    function initSearch() {
-        var input = /** @type {!HTMLInputElement} */(
-            document.getElementById('buscar'));
-
-        var autocomplete = new google.maps.places.Autocomplete(input);
-        autocomplete.setTypes(['geocode']);
-        var infowindow = new google.maps.InfoWindow();
-
-        autocomplete.addListener('place_changed', function () {
-            infowindow.close();
-            var place = autocomplete.getPlace();
-
-            infowindow.setContent('<div><strong>' + place.name);
-            infowindow.open();
-        });
-    }
-</script>
+<script src="scripts/directives/googleplace.js"></script>
 <!-- endbuild -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDULjii0hj1OblU5FanyMNoUuuYSVjpnRU&language=en&libraries=places&callback=initSearch"
-        async defer></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDULjii0hj1OblU5FanyMNoUuuYSVjpnRU&language=en&libraries=places"></script>
 </body>
 </html>

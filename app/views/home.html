@@ -7,9 +7,7 @@
                     <label for="buscar" class="fontFamily blue">Inform a location:</label>
                     <div class="inner-addon right-addon">
                         <i class="glyphicon glyphicon-search"></i>
-                        <input type="text" placeholder="Ex: Blumenau, SC" class="form-control"
-                               ng-keyup="$event.keyCode == 13 && forecastCtrl.updateLocation()" id="buscar"
-                               ng-model="forecastCtrl.newLocation">
+                        <input type="text" googleplace placeholder="Ex: Blumenau, SC" class="form-control" id="buscar" new-place="forecastCtrl.newLocation"/>
                         <span ng-show="forecastCtrl.invalidLocation" class="help-block">Acceptable Example: São Paulo - SP, Brazil</span>
                     </div>
                 </form>
@@ -20,8 +18,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2 id="location" class="fontFamily blue">{{forecastCtrl.location}} <a class="btn btn-primary"
-                                                                                       ng-click="forecastCtrl.saveFavorite()">
+                <h2 id="location" class="fontFamily blue">{{forecastCtrl.location}} <a class="btn btn-primary" ng-click="forecastCtrl.saveFavorite()">
                     <i class="fa fa-thumb-tack white"></i>
                     Set Favorite</a></h2>
             </div>
