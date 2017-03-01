@@ -12,6 +12,10 @@
     padding: 10px 0 0 0;
 }
 
+.marg {
+    margin: 2px;
+}
+
 .row-header {
     margin: 0 auto;
     padding: 0 0;
@@ -91,8 +95,4 @@
 
 .medium {
     font-size: 200%;
-}
-
-.pac-container {
-    font-family: "Roboto", Arial, sans-serif;
 }

@@ -37,16 +37,16 @@
                             <img ng-src={{forecastCtrl.image}} width="167" height="123" class="img-responsive">
                         </div>
                         <div class="col-xs-6 col-sm-6 col-lg-4">
-                            <h1 class="fontFamily blue big">{{forecastCtrl.observation.response.ob.tempC}}ºC</h1>
-                            <h5 class="fontFamily blue">{{forecastCtrl.observation.response.ob.weather}}</h5>
+                            <h1 class="fontFamily blue big">{{forecastCtrl.obsTempC}}ºC</h1>
+                            <h5 class="fontFamily blue">{{forecastCtrl.obsWeather}}</h5>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-lg-4">
                             <h5 class="fontFamily blue"><strong>Humidity:</strong>
-                                {{forecastCtrl.observation.response.ob.humidity}}%</h5>
+                                {{forecastCtrl.obsHumidity}}%</h5>
                             <h5 class="fontFamily blue"><strong>Pressure:</strong>
-                                {{forecastCtrl.observation.response.ob.pressureMB}}</h5>
+                                {{forecastCtrl.obsPressure}}</h5>
                             <h5 class="fontFamily blue"><strong>Wind:</strong>
-                                {{forecastCtrl.observation.response.ob.windKPH}} km/h</h5>
+                                {{forecastCtrl.obsWind}} km/h</h5>
                         </div>
                     </div>
                     <div class="overlay col-xs-offset-6 col-sm-offset-5" ng-if="!forecastCtrl.showObservation">
@@ -115,11 +115,11 @@
                             </div>
                         </div>
                         <div class="col-xs-6 col-md-6">
-                            <span class="fontFamily blue">{{forecastCtrl.weekendForecast.response[0].periods[0].minTempC}}°C ~ {{forecastCtrl.weekendForecast.response[0].periods[0].maxTempC}}°C</span>
+                            <span class="fontFamily blue">{{forecastCtrl.satMinTemp}}°C ~ {{forecastCtrl.satMaxTemp}}°C</span>
                         </div>
 
                         <div class="col-xs-6 col-md-6">
-                            <span class="fontFamily blue">{{forecastCtrl.weekendForecast.response[0].periods[1].minTempC}}°C ~ {{forecastCtrl.weekendForecast.response[0].periods[1].maxTempC}}°C</span>
+                            <span class="fontFamily blue">{{forecastCtrl.sunMinTemp}}°C ~ {{forecastCtrl.sunMaxTemp}}°C</span>
                         </div>
 
                         <div class="row row-nopad">
@@ -127,26 +127,21 @@
                                  ng-if="forecastCtrl.warm">
                                 <img ng-src="images/warm.jpg" width="167" height="123" class="img-responsive pad">
                                 <span class="fontFamily blue pad"><strong>We Recommend: </strong></span>
-                                <span class="label label-warning">Beach</span>
-                                <span class="label label-warning">Beer</span>
-                                <span class="label label-warning">Open Air Activities</span>
+                                <span class="label label-warning marg" ng-repeat="recommend in forecastCtrl.warmRecommends">{{recommend}}</span>
                             </div>
 
                             <div class="col-sm-offset-1 col-xs-offset-1 col-lg-offset-2 col-xs-12 col-sm-12"
                                  ng-if="forecastCtrl.cold">
                                 <img ng-src="images/cold.jpg" width="167" height="123" class="img-responsive pad">
                                 <span class="fontFamily blue pad"><strong>We Recommend: </strong></span>
-                                <span class="label label-primary">Hot Chocolate</span>
-                                <span class="label label-primary">Movies</span>
-                                <span class="label label-primary">Warm Clothes</span>
+                                <span class="label label-warning marg" ng-repeat="recommend in forecastCtrl.coldRecommends">{{recommend}}</span>
                             </div>
 
                             <div class="col-sm-offset-1 col-xs-offset-1 col-lg-offset-2 col-xs-12 col-sm-12"
                                  ng-if="forecastCtrl.rain">
                                 <img ng-src="images/rain.jpg" width="167" height="123" class="img-responsive pad">
                                 <span class="fontFamily blue pad"><strong>We Recommend: </strong></span>
-                                <span class="label label-default">Movies</span>
-                                <span class="label label-primary">Umbrella</span>
+                                <span class="label label-warning marg" ng-repeat="recommend in forecastCtrl.rainRecommends">{{recommend}}</span>
                             </div>
                         </div>
                     </div>

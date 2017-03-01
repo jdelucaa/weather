@@ -26,6 +26,12 @@
         vm.image = "";
         vm.invalidLocation = false;
 
+        vm.warmRecommends = ['Beach','Beer','Open Air Activities'];
+        vm.coldRecommends = ['Hot Chocolate','Movies','Warm Clothes'];
+        vm.rainRecommends = ['Movies','Umbrella'];
+
+        vm.saveFavorite = saveFavorite;
+
         setLocation();
         loadForecasts();
 
@@ -42,6 +48,11 @@
                 .$promise.then(
                     function (response) {
                         vm.observation = response;
+                        vm.obsTempC = vm.observation.response.ob.tempC;
+                        vm.obsWeather = vm.observation.response.ob.weather;
+                        vm.obsHumidity = vm.observation.response.ob.humidity; 
+                        vm.obsPressure = vm.observation.response.ob.pressureMB;
+                        vm.obsWind = vm.observation.response.ob.windKPH;
                         updateImage();
                         vm.showObservation = true;
                     },
@@ -67,6 +78,10 @@
                 .$promise.then(
                     function (response) {
                         vm.weekendForecast = response;
+                        vm.satMinTemp = vm.weekendForecast.response[0].periods[0].minTempC;
+                        vm.satMaxTemp = vm.weekendForecast.response[0].periods[0].maxTempC;
+                        vm.sunMinTemp = vm.weekendForecast.response[0].periods[1].minTempC;
+                        vm.sunMaxTemp = vm.weekendForecast.response[0].periods[1].maxTempC;
                         prepareRecomendation();
                         vm.showWeekendForecast = true;
                     },
@@ -75,8 +90,8 @@
                     }
                 );
         }
-
-        vm.saveFavorite = function saveFavorite() {
+        
+        function saveFavorite() {
             localStorage.setItem('location', vm.location.replace("-", ",").trim());
         };
 
@@ -185,6 +200,8 @@
         }
 
         function loadChart() {
+            var forecast = vm.forecast.response[0];
+
             vm.myChartObject.type = "LineChart";
             vm.myChartObject.displayed = false;
             vm.myChartObject.data = {
@@ -203,44 +220,44 @@
                 }],
                 "rows": [{
                     c: [{
-                        v: $filter("date")(vm.forecast.response[0].periods[1].validTime, "EEEE")
+                        v: $filter("date")(forecast.periods[1].validTime, "EEEE")
                     }, {
-                        v: vm.forecast.response[0].periods[1].maxTempC
+                        v: forecast.periods[1].maxTempC
                     }, {
-                        v: vm.forecast.response[0].periods[1].minTempC
+                        v: forecast.periods[1].minTempC
                     }]
                 }, {
                     c: [{
-                        v: $filter("date")(vm.forecast.response[0].periods[2].validTime, "EEEE")
+                        v: $filter("date")(forecast.periods[2].validTime, "EEEE")
                     }, {
-                        v: vm.forecast.response[0].periods[2].maxTempC
+                        v: forecast.periods[2].maxTempC
                     }, {
-                        v: vm.forecast.response[0].periods[2].minTempC
+                        v: forecast.periods[2].minTempC
                     }]
 
                 }, {
                     c: [{
-                        v: $filter("date")(vm.forecast.response[0].periods[3].validTime, "EEEE")
+                        v: $filter("date")(forecast.periods[3].validTime, "EEEE")
                     }, {
-                        v: vm.forecast.response[0].periods[3].maxTempC
+                        v: forecast.periods[3].maxTempC
                     }, {
-                        v: vm.forecast.response[0].periods[3].minTempC
+                        v: forecast.periods[3].minTempC
                     }]
                 }, {
                     c: [{
-                        v: $filter("date")(vm.forecast.response[0].periods[4].validTime, "EEEE")
+                        v: $filter("date")(forecast.periods[4].validTime, "EEEE")
                     }, {
-                        v: vm.forecast.response[0].periods[4].maxTempC
+                        v: forecast.periods[4].maxTempC
                     }, {
-                        v: vm.forecast.response[0].periods[4].minTempC
+                        v: forecast.periods[4].minTempC
                     }]
                 }, {
                     c: [{
-                        v: $filter("date")(vm.forecast.response[0].periods[5].validTime, "EEEE")
+                        v: $filter("date")(forecast.periods[5].validTime, "EEEE")
                     }, {
-                        v: vm.forecast.response[0].periods[5].maxTempC
+                        v: forecast.periods[5].maxTempC
                     }, {
-                        v: vm.forecast.response[0].periods[5].minTempC
+                        v: forecast.periods[5].minTempC
                     }]
                 }]
             };
