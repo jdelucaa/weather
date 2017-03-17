@@ -15,12 +15,19 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
+            'bower_components/jquery/dist/jquery.js',
             'bower_components/angular/angular.js',
             'bower_components/angular-resource/angular-resource.js',
             'bower_components/angular-ui-router/release/angular-ui-router.js',
             'bower_components/angular-mocks/angular-mocks.js',
+            'bower_components/angular-google-chart/ng-google-chart.js',
+            'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
+            'node_modules/babel-polyfill/browser.js',
             'app/scripts/**/*.js',
-            'test/unit/**/*.js'
+            'test/unit/**/*.js',
+
+            {pattern: 'test/mock/*.json', watched: true, served: true, included: false}
+
         ],
 
         // list of files to exclude
@@ -52,7 +59,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome','PhantomJS', 'PhantomJS_custom'],
+        browsers: ['Chrome', 'PhantomJS', 'PhantomJS_custom'],
 
         // you can define custom flags
         customLaunchers: {
@@ -62,7 +69,7 @@ module.exports = function (config) {
                     windowName: 'my-window',
                     settings: {
                         webSecurityEnabled: false
-                    },
+                    }
                 },
                 flags: ['--load-images=true'],
                 debug: true
@@ -82,4 +89,4 @@ module.exports = function (config) {
         // how many browser should be started simultaneous
         concurrency: Infinity
     })
-}
+};
