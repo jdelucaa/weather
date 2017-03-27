@@ -43,7 +43,52 @@ describe('Controller: ForecastController', function () {
 
     }));
 
-    it('should have observation as defined', function () {
+    it('should have observation as defined and showObservation as true', function () {
         expect(scope.forecast.observation).toBeDefined();
+        expect(scope.forecast.showObservation).toBeTruthy();
+    });
+
+    it('should have image as cloudy', function () {
+        expect(scope.forecast.image).toBe("images/cloudy.png");
+    });
+
+    it('should have forecast as defined and showForecast as true', function () {
+        expect(scope.forecast.forecast).toBeDefined();
+        expect(scope.forecast.showForecast).toBeTruthy();
+    });
+
+    it('should have weeks maxTemp as 32 and maxTempDate as 02/17/2017', function () {
+        expect(scope.forecast.maxDate).toBe("2017-02-17T07:00:00-02:00");
+        expect(scope.forecast.max).toBe(32);
+    });
+
+    it('should have weeks minTemp as 20 and minTempDate as 02/11/2017', function () {
+        expect(scope.forecast.minDate).toBe("2017-02-11T07:00:00-02:00");
+        expect(scope.forecast.min).toBe(20);
+    });
+
+    it('should have myChartObject as defined', function () {
+        expect(scope.forecast.myChartObject).toBeDefined();
+    });
+
+    it('should have weekendForecast as defined and showWeekendForecast as true', function () {
+        expect(scope.forecast.weekendForecast).toBeDefined();
+        expect(scope.forecast.showWeekendForecast).toBeTruthy();
+    });
+
+    it('should have rain as false, cold as false and warm as true as recomendation info for the weekend', function () {
+        expect(scope.forecast.rain).toBeFalsy();
+        expect(scope.forecast.cold).toBeFalsy();
+        expect(scope.forecast.warm).toBeTruthy();
+    });
+
+    it('should have saturday minTemp as 20 and saturday maxTemp as 27', function () {
+        expect(scope.forecast.satMinTemp).toBe(20);
+        expect(scope.forecast.satMaxTemp).toBe(27);
+    });
+
+    it('should have sunday minTemp as 19 and saturday maxTemp as 24', function () {
+        expect(scope.forecast.sunMinTemp).toBe(19);
+        expect(scope.forecast.sunMaxTemp).toBe(24);
     });
 });
