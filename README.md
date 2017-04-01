@@ -1,6 +1,6 @@
 # Weather Forecast
 
-- Simple application for weather forecast using Aeris Weather API - http://www.aerisweather.com/support/docs/api/
+- Simple AngularJS application for weather forecast using Aeris Weather API - http://www.aerisweather.com/support/docs/api/
 
 - Note: Aeris Weather API has a daily usage limit of 750 hits (requests) per day for free users (my case). Be nice!
 
