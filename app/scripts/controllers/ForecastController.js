@@ -68,6 +68,7 @@
                         findMinMaxTemps();
                         loadChart();
                         vm.showForecast = true;
+                        vm.sixDaysForecast = vm.forecast.response[0].periods.slice(1,7);
                     },
                     function (response) {
                         vm.message = "Error: " + response.status + " " + response.statusText;
@@ -93,7 +94,7 @@
         
         function saveFavorite() {
             localStorage.setItem('location', vm.location.replace("-", ",").trim());
-        };
+        }
 
         $scope.$watch('forecastCtrl.newLocation', function(current, original) {
             $log.info('forecastCtrl.newLocation was %s', original);
